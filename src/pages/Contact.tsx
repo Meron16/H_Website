@@ -1,26 +1,7 @@
-import { useRef, useState, type FormEvent } from 'react'
-import gsap from 'gsap'
-import { useGSAP } from '@gsap/react'
-
-gsap.registerPlugin(useGSAP)
+import { useState, type FormEvent } from 'react'
 
 export default function Contact() {
-  const page = useRef<HTMLDivElement>(null)
   const [sent, setSent] = useState(false)
-
-  useGSAP(
-    () => {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-      gsap.from('.contact-anim > *', {
-        y: 24,
-        opacity: 0,
-        duration: 0.75,
-        stagger: 0.08,
-        ease: 'power3.out',
-      })
-    },
-    { scope: page },
-  )
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -35,83 +16,58 @@ export default function Contact() {
   }
 
   return (
-    <div ref={page} className="mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-24">
-      <div className="grid items-start gap-12 lg:grid-cols-[1fr_1.05fr]">
-        <div className="contact-anim">
-          <p className="font-display text-sm font-semibold tracking-[0.18em] text-brand uppercase">
-            Contact
-          </p>
-          <h1 className="mt-3 font-display text-4xl font-bold text-brand-ink text-balance md:text-5xl">
-            Let’s build your next great team
+    <div className="bg-ink px-5 pb-20 pt-28 text-white md:px-8 md:pt-32">
+      <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2">
+        <div>
+          <p className="text-xs font-semibold tracking-[0.22em] text-brand uppercase">Contact</p>
+          <h1 className="mt-4 text-3xl font-bold tracking-tight md:text-5xl">
+            Let’s talk about the roles you need to fill
           </h1>
-          <p className="mt-5 max-w-md text-lg leading-relaxed text-muted">
-            Tell us about your hiring goals. We’ll reply with next steps for a discovery call.
+          <p className="mt-4 text-muted">
+            Tell us what you’re hiring for. We’ll reply with next steps for a discovery call.
           </p>
-          <a
-            href="mailto:hello@hirearky.com"
-            className="mt-8 inline-flex items-center gap-3 rounded-2xl border border-line bg-white/70 px-5 py-4 text-brand-ink transition hover:border-brand/40"
-          >
-            <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand/15 text-brand">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path
-                  d="M4 6h16v12H4V6zm0 0l8 7 8-7"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </span>
-            <span>
-              <span className="block text-sm text-muted">Email</span>
-              <span className="font-semibold">hello@hirearky.com</span>
-            </span>
+          <a href="mailto:hello@hirearky.com" className="mt-6 inline-block text-sm font-semibold text-brand-glow">
+            hello@hirearky.com
           </a>
         </div>
 
-        <form
-          onSubmit={onSubmit}
-          className="contact-anim rounded-[2rem] border border-line bg-white/80 p-7 shadow-[0_24px_60px_rgba(66,48,125,0.08)] md:p-9"
-        >
+        <form onSubmit={onSubmit} className="rounded-3xl border border-line bg-panel p-6 md:p-8">
           <label className="block">
-            <span className="font-display text-sm font-semibold text-brand-ink">Name</span>
+            <span className="text-sm font-semibold">Name</span>
             <input
               name="name"
               required
-              className="mt-2 w-full rounded-xl border border-line bg-brand-mist/50 px-4 py-3 outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/15"
+              className="mt-2 w-full rounded-xl border border-line bg-ink px-3.5 py-2.5 text-sm outline-none focus:border-brand"
               placeholder="Your name"
             />
           </label>
-          <label className="mt-5 block">
-            <span className="font-display text-sm font-semibold text-brand-ink">Email</span>
+          <label className="mt-4 block">
+            <span className="text-sm font-semibold">Email</span>
             <input
               name="email"
               type="email"
               required
-              className="mt-2 w-full rounded-xl border border-line bg-brand-mist/50 px-4 py-3 outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/15"
+              className="mt-2 w-full rounded-xl border border-line bg-ink px-3.5 py-2.5 text-sm outline-none focus:border-brand"
               placeholder="you@company.com"
             />
           </label>
-          <label className="mt-5 block">
-            <span className="font-display text-sm font-semibold text-brand-ink">Message</span>
+          <label className="mt-4 block">
+            <span className="text-sm font-semibold">Message</span>
             <textarea
               name="message"
               required
               rows={5}
-              className="mt-2 w-full resize-y rounded-xl border border-line bg-brand-mist/50 px-4 py-3 outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/15"
-              placeholder="Roles you’re hiring for, timeline, and anything else we should know…"
+              className="mt-2 w-full resize-y rounded-xl border border-line bg-ink px-3.5 py-2.5 text-sm outline-none focus:border-brand"
+              placeholder="Roles, timeline, anything we should know…"
             />
           </label>
           <button
             type="submit"
-            className="mt-7 w-full rounded-full bg-brand px-6 py-3.5 font-display text-sm font-semibold text-white transition hover:bg-brand-deep"
+            className="mt-6 w-full rounded-full bg-brand px-5 py-3 text-sm font-semibold hover:bg-brand-deep"
           >
             Send message
           </button>
-          {sent && (
-            <p className="mt-4 text-center text-sm text-muted">
-              Opening your email client… If nothing opens, write us at hello@hirearky.com.
-            </p>
-          )}
+          {sent && <p className="mt-3 text-center text-xs text-muted">Opening your email client…</p>}
         </form>
       </div>
     </div>
